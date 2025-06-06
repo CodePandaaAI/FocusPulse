@@ -17,7 +17,8 @@ class TimerViewModel : ViewModel() {
         private set
 
     // Stores originally set duration for reset
-    private var initialDurationSeconds by mutableIntStateOf(DEFAULT_TIMER_DURATION_MINUTES * 60)
+    var initialTime by mutableIntStateOf(DEFAULT_TIMER_DURATION_MINUTES * 60)
+        private set
 
     private var countDownTimer: CountDownTimer? = null
 
@@ -27,7 +28,7 @@ class TimerViewModel : ViewModel() {
 
     fun setTimer(minutes: Int) {
         val newDurationSeconds = minutes * 60
-        initialDurationSeconds = newDurationSeconds
+        initialTime = newDurationSeconds
         timeSeconds = newDurationSeconds
         if (isRunning) { // If timer is running, reset it with new duration
             pauseTimer()
@@ -45,6 +46,7 @@ class TimerViewModel : ViewModel() {
             override fun onTick(millisUntilFinished: Long) {
                 timeSeconds = (millisUntilFinished / 1000).toInt()
             }
+
             override fun onFinish() {
                 isRunning = false
                 timeSeconds = 0
@@ -62,6 +64,6 @@ class TimerViewModel : ViewModel() {
     fun resetTimer() {
         countDownTimer?.cancel()
         isRunning = false
-        timeSeconds = initialDurationSeconds // Reset to the duration initially set by setTimer()
+        timeSeconds = initialTime // Reset to the duration initially set by setTimer()
     }
 }
