@@ -31,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -83,8 +84,9 @@ private fun FocusPulseScreen(viewModel: TimerViewModel = viewModel()) {
             ) {
                 CircularWavyProgressIndicator(
                     progress = { progress },
+                    stroke = Stroke(width = 12.dp.value),
                     modifier = Modifier.fillMaxSize(), // Fill the Box
-                    gapSize = 8.dp, // Increased gap
+                    gapSize = 12.dp, // Increased gap
                     trackColor = MaterialTheme.colorScheme.surfaceVariant,
                     color = MaterialTheme.colorScheme.primary
                 )
