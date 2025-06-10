@@ -140,7 +140,7 @@ private fun FocusPulseScreen(viewModel: TimerViewModel = viewModel()) {
                             viewModel.startTimer()
                         }
                     },
-                    modifier = Modifier.size(64.dp), // Reduced size for a more compact look
+                    modifier = Modifier.size(80.dp), // Increased size for a more prominent look
                     colors = IconButtonDefaults.filledIconButtonColors(
                         containerColor = MaterialTheme.colorScheme.primary,
                         contentColor = MaterialTheme.colorScheme.onPrimary
@@ -151,12 +151,12 @@ private fun FocusPulseScreen(viewModel: TimerViewModel = viewModel()) {
                             id = if (viewModel.isRunning) R.drawable.ic_pause else R.drawable.ic_play_arrow
                         ),
                         contentDescription = if (viewModel.isRunning) "Pause" else "Play",
-                        modifier = Modifier.size(36.dp) // Reduced icon size for better proportion
+                        modifier = Modifier.size(48.dp) // Increased icon size for better proportion
                     )
                 }
                 FilledIconButton(
                     onClick = { viewModel.resetTimer() }, // Reset timer action
-                    modifier = Modifier.size(64.dp), // Reduced size
+                    modifier = Modifier.size(80.dp), // Increased size
                     colors = IconButtonDefaults.filledIconButtonColors(
                         containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                         contentColor = MaterialTheme.colorScheme.onTertiaryContainer
@@ -165,7 +165,7 @@ private fun FocusPulseScreen(viewModel: TimerViewModel = viewModel()) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.ic_reset),
                         contentDescription = "Reset",
-                        modifier = Modifier.size(36.dp) // Reduced icon size
+                        modifier = Modifier.size(48.dp) // Increased icon size
                     )
                 }
             }
