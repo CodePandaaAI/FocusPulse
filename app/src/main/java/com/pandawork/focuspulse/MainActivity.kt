@@ -113,13 +113,15 @@ private fun FocusPulseScreen(viewModel: TimerViewModel = viewModel()) {
                     Button(
                         onClick = { viewModel.setTimer(duration) },
                         modifier = Modifier.weight(1f) // Distribute space evenly
-                            .height(48.dp), // Reduced height
+                            .height(58.dp), // Reduced height
                         colors = ButtonDefaults.buttonColors(
                             containerColor = MaterialTheme.colorScheme.secondaryContainer,
                             contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                         )
                     ) {
-                        Text("$duration min")
+                        Text("$duration min",
+                            fontSize = 16.sp
+                        )
                     }
                 }
             }
@@ -140,7 +142,7 @@ private fun FocusPulseScreen(viewModel: TimerViewModel = viewModel()) {
                             viewModel.startTimer()
                         }
                     },
-                    modifier = Modifier.size(80.dp), // Increased size for a more prominent look
+                    modifier = Modifier.size(120.dp), // Increased size for a more prominent look
                     colors = IconButtonDefaults.filledIconButtonColors(
                         containerColor = MaterialTheme.colorScheme.primary,
                         contentColor = MaterialTheme.colorScheme.onPrimary
@@ -156,7 +158,7 @@ private fun FocusPulseScreen(viewModel: TimerViewModel = viewModel()) {
                 }
                 FilledIconButton(
                     onClick = { viewModel.resetTimer() }, // Reset timer action
-                    modifier = Modifier.size(80.dp), // Increased size
+                    modifier = Modifier.size(120.dp), // Increased size
                     colors = IconButtonDefaults.filledIconButtonColors(
                         containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                         contentColor = MaterialTheme.colorScheme.onTertiaryContainer
