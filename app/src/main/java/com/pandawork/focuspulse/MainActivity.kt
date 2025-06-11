@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             FocusPulseTheme {
                 // Main app UI entry point
-                FocusPulseScreen(viewModel = viewModel())
+                FocusPulseScreen()
             }
         }
     }
@@ -56,7 +56,8 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-private fun FocusPulseScreen(viewModel: TimerViewModel = viewModel()) {
+private fun FocusPulseScreen() {
+    val viewModel: TimerViewModel = viewModel()
     val progress by animateFloatAsState(
         targetValue = if (viewModel.initialTime > 0) {
             1f - (viewModel.timeSeconds.toFloat() / viewModel.initialTime.toFloat())
@@ -69,7 +70,7 @@ private fun FocusPulseScreen(viewModel: TimerViewModel = viewModel()) {
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         Column(
             modifier = Modifier.fillMaxSize()
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(rememberScrollState()) // Enable scrolling for smaller screens
                 .padding(innerPadding).padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceEvenly
@@ -79,13 +80,13 @@ private fun FocusPulseScreen(viewModel: TimerViewModel = viewModel()) {
             // Timer display
             Box(
                 modifier = Modifier
-                    .size(300.dp), // Increased size
+                    .size(280.dp), // Adjusted size for better screen fit
                 contentAlignment = Alignment.Center
             ) {
                 CircularWavyProgressIndicator(
                     progress = { progress },
-                    stroke = Stroke(width = 12.dp.value),
-                    modifier = Modifier.fillMaxSize(), // Fill the Box
+                    stroke = Stroke(width = 10.dp.value), // Adjusted stroke width
+                    modifier = Modifier.fillMaxSize(),
                     gapSize = 12.dp, // Increased gap
                     trackColor = MaterialTheme.colorScheme.surfaceVariant,
                     color = MaterialTheme.colorScheme.primary
@@ -93,7 +94,7 @@ private fun FocusPulseScreen(viewModel: TimerViewModel = viewModel()) {
                 Text(
                     text = formatTime(viewModel.timeSeconds),
                     style = MaterialTheme.typography.displayLarge.copy(
-                        fontSize = 72.sp // Increased font size for the timer text
+                        fontSize = 68.sp // Adjusted font size
                     ),
                     color = MaterialTheme.colorScheme.onSurface
                 )
@@ -103,23 +104,25 @@ private fun FocusPulseScreen(viewModel: TimerViewModel = viewModel()) {
             Spacer(modifier = Modifier.height(32.dp))
 
             // Preset duration buttons
-            Row( // Center the row of buttons
+            Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 val presetDurations = listOf(1, 15, 25)
                 presetDurations.forEach { duration ->
+                    // Button for each preset duration
                     Button(
-                        onClick = { viewModel.setTimer(duration) },
-                        modifier = Modifier.weight(1f) // Distribute space evenly
-                            .height(58.dp), // Reduced height
+                        onClick = {
+                            viewModel.setTimer(duration)
+                        },
+                        modifier = Modifier.weight(1f).height(56.dp), // Adjusted height
                         colors = ButtonDefaults.buttonColors(
                             containerColor = MaterialTheme.colorScheme.secondaryContainer,
                             contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                         )
                     ) {
-                        Text("$duration min",
+                        Text("${duration}min", // Compact text
                             fontSize = 16.sp
                         )
                     }
@@ -131,7 +134,8 @@ private fun FocusPulseScreen(viewModel: TimerViewModel = viewModel()) {
 
             // Control buttons (Play/Pause, Reset)
             Row(
-                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 // Play/Pause button with dynamic icon
                 FilledIconButton(
@@ -142,7 +146,7 @@ private fun FocusPulseScreen(viewModel: TimerViewModel = viewModel()) {
                             viewModel.startTimer()
                         }
                     },
-                    modifier = Modifier.size(120.dp), // Increased size for a more prominent look
+                    modifier = Modifier.size(110.dp), // Adjusted size
                     colors = IconButtonDefaults.filledIconButtonColors(
                         containerColor = MaterialTheme.colorScheme.primary,
                         contentColor = MaterialTheme.colorScheme.onPrimary
@@ -153,21 +157,22 @@ private fun FocusPulseScreen(viewModel: TimerViewModel = viewModel()) {
                             id = if (viewModel.isRunning) R.drawable.ic_pause else R.drawable.ic_play_arrow
                         ),
                         contentDescription = if (viewModel.isRunning) "Pause" else "Play",
-                        modifier = Modifier.size(48.dp) // Increased icon size for better proportion
+                        modifier = Modifier.size(44.dp) // Adjusted icon size
                     )
                 }
+                // Reset button
                 FilledIconButton(
-                    onClick = { viewModel.resetTimer() }, // Reset timer action
-                    modifier = Modifier.size(120.dp), // Increased size
+                    onClick = { viewModel.resetTimer() },
+                    modifier = Modifier.size(110.dp), // Adjusted size
                     colors = IconButtonDefaults.filledIconButtonColors(
                         containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                         contentColor = MaterialTheme.colorScheme.onTertiaryContainer
                     )
                 ) {
                     Icon(
-                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_reset),
+                        imageVector = ImageVector.vectorResource(R.drawable.ic_reset),
                         contentDescription = "Reset",
-                        modifier = Modifier.size(48.dp) // Increased icon size
+                        modifier = Modifier.size(44.dp) // Adjusted icon size
                     )
                 }
             }
